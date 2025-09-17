@@ -5,6 +5,7 @@ class MyString
 	int length;
 public:
 	MyString();
+	//MyString(MyString&& obj);
 	MyString(int size);
 	MyString(const char* st);
 	~MyString();
@@ -15,6 +16,8 @@ public:
 	int MyStrLen();// возвращает длину строки
 	void MyStrCat(MyString& b); // объединение строк
 	void MyDelChr(char c); // удаляет указанный символ 
-	int MyStrCmp(MyString& b); // сравнение строк 
+	int MyStrCmp(const MyString& b); // сравнение строк 
+	
+	
 };
 

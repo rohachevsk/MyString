@@ -1,12 +1,24 @@
 #include "MyString.h"
 #include <iostream>
+#include <cstring>
 using namespace std;
 
 MyString::MyString()
 {
 	length = 80;
-	str = new char[length] {};
+	str = new char[length + 1] {};
 }
+
+MyString::MyString(MyString&& obj)
+{
+	this->str = obj.str;
+	this->length = obj.length;
+	obj.str = nullptr;
+	obj.length = 0;
+	cout << "Move constructor!\n";
+}
+
+
 
 MyString::MyString(int size)
 {
@@ -31,6 +43,7 @@ void MyString::Print()
 {
 	cout << str << endl;
 }
+
 
 void MyString::MyStrcpy(MyString& obj)
 {
@@ -73,8 +86,56 @@ void MyString::MyStrCat(MyString& b)
 	int s = strlen(str) + strlen(b.str) + 1;
 	char * newChar = new char[s];
 	strcpy_s(newChar, strlen(str) + strlen(b.str) + 1, this->str);
-	strcat(newChar, this->str);
+	strcat_s(newChar,s, b.str);
 	delete[] this->str;
 	this->str = newChar;
 }
+
+void MyString::MyDelChr(char c)
+{
+	int count = 0;
+	for (int i = 0; i < length + 1; ++i)
+	{
+		if (str[i] == c)
+		{
+			count++;
+		}
+	}
+	int newSize = length - count;
+	char* newStr = new char[newSize + 1];
+
+	int j = 0; // index newStr
+	for (int i = 0; i < length + 1; ++i)
+	{
+		if (str[i] != c)
+		{
+			newStr[j] = str[i];
+			j++;
+		}
+	}
+	delete[]str;
+	str = newStr;
+	length = newSize;
+}
+
+int MyString::MyStrCmp(const MyString& b)
+{
+	int result1 = strlen(this->str);
+	int result2 = strlen(b.str);
+
+	if (result1 > result2)
+	{
+		return 1;
+	}
+	else if (result1 < result2)
+	{
+		return -1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+
 	
