@@ -5,7 +5,7 @@ class MyString
 	int length;
 public:
 	MyString();
-	//MyString(MyString&& obj);
+	MyString(MyString&& obj);
 	MyString(int size);
 	MyString(const char* st);
 	~MyString();
