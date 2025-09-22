@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include "MyString.h"
 using namespace std;
@@ -14,7 +13,8 @@ int main()
 	cout << obj1.MyStrCmp(obj2);
 	obj1.MyStrCat(obj2);
 	obj1.MyDelChr('l');
-	MyString obj3("Hello");
-	obj3 = move(obj2);
+	cout << endl;
+	MyString obj3(move(obj1));
 	obj3.Print();
+	MyString::printCount();
 }

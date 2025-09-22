@@ -8,7 +8,7 @@ MyString::MyString()
 	length = 80;
 	str = new char[length + 1] {};
 }
-
+int MyString::count = 0;
 MyString::MyString(MyString&& obj)
 {
 	this->str = obj.str;
@@ -16,6 +16,7 @@ MyString::MyString(MyString&& obj)
 	obj.str = nullptr;
 	obj.length = 0;
 	cout << "Move constructor!\n";
+	count++;
 }
 
 
@@ -31,6 +32,7 @@ MyString::MyString(const char* st)
 	length = strlen(st);
 	str = new char[length + 1];
 	strcpy_s(str, length + 1, st);
+	count++;
 }
 
 MyString::~MyString()
@@ -135,6 +137,11 @@ int MyString::MyStrCmp(const MyString& b)
 	{
 		return 0;
 	}
+}
+
+void MyString::printCount()
+{
+	cout << "Count => " << count << endl;
 }
 
 

@@ -3,9 +3,10 @@ class MyString
 {
 	char* str;
 	int length;
+	static int count;
 public:
 	MyString();
-	//MyString(MyString&& obj);
+	MyString(MyString&& obj);
 	MyString(int size);
 	MyString(const char* st);
 	~MyString();
@@ -17,7 +18,6 @@ public:
 	void MyStrCat(MyString& b); // объединение строк
 	void MyDelChr(char c); // удаляет указанный символ 
 	int MyStrCmp(const MyString& b); // сравнение строк 
-	
-	
+	static void printCount();
 };
 
