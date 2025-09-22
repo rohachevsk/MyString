@@ -18,9 +18,6 @@ MyString::MyString(MyString&& obj)
 	cout << "Move constructor!\n";
 	count++;
 }
-
-
-
 MyString::MyString(int size)
 {
 	length = size;
@@ -115,6 +112,7 @@ void MyString::MyDelChr(char c)
 			j++;
 		}
 	}
+	newStr[newSize] = '\0';
 	delete[]str;
 	str = newStr;
 	length = newSize;
