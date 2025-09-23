@@ -4,7 +4,7 @@
 using namespace std;
 int main()
 {
-	MyString obj1("Hello worldd!");
+	/*MyString obj1("Hello worldd!");
 	obj1.Print();
 	cout << obj1.MyStrStr("wo") << endl;
 	cout << "Index: " << obj1.MyChr('o') << endl;
@@ -16,5 +16,8 @@ int main()
 	obj1.MyDelChr('l');
 	cout << endl;
 	MyString obj3(move(obj1));
-	obj3.Print();
+	obj3.Print();*/
+	MyString a("Hello");
+	MyString b("World");
+	MyString c = a + b;
 }

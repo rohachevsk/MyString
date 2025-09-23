@@ -17,7 +17,8 @@ public:
 	void MyStrCat(MyString& b); // объединение строк
 	void MyDelChr(char c); // удаляет указанный символ 
 	int MyStrCmp(const MyString& b); // сравнение строк 
-	
+	MyString operator+(const char* b);
+	MyString operator-(const char* b);
 	
 };
 

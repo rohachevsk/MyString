@@ -135,5 +135,24 @@ int MyString::MyStrCmp(const MyString& b)
 	}
 }
 
+MyString MyString::operator+(const char *b)
+{
+	MyString result(length+1 + strlen(b)+1);
+	strcpy_s(result.str, result.length + 1, this->str);
+	strcat_s(result.str, length + strlen(b)+2, b);
+	return result;
+}
+MyString MyString::operator-(const char* b)
+{
+	MyString result(this->length + 1);
+	char* pos = strstr(result.str, b);
+	if (pos != nullptr)
+	{
+		int newLenght = strlen(this->str) - strlen(b);
+		result.str = new char[newLenght + 1];
+	}
+	
+}
+
 
 	
