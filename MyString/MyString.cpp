@@ -7,8 +7,9 @@ MyString::MyString()
 {
 	length = 80;
 	str = new char[length + 1] {};
+	count++;
 }
-
+int MyString::count = 0;
 MyString::MyString(MyString&& obj)
 {
 	this->str = obj.str;
@@ -16,11 +17,13 @@ MyString::MyString(MyString&& obj)
 	obj.str = nullptr;
 	obj.length = 0;
 	cout << "Move constructor!\n";
+	count++;
 }
 MyString::MyString(int size)
 {
 	length = size;
-	str = new char[length] {};
+	str = new char[length + 1] {};
+	count++;
 }
 
 MyString::MyString(const char* st)
@@ -28,11 +31,13 @@ MyString::MyString(const char* st)
 	length = strlen(st);
 	str = new char[length + 1];
 	strcpy_s(str, length + 1, st);
+	count++;
 }
 
 MyString::~MyString()
 {
 	delete[]str;
+	str = nullptr;
 	length = 0;
 }
 
@@ -44,6 +49,7 @@ void MyString::Print()
 
 void MyString::MyStrcpy(MyString& obj)
 {
+	delete[] str;
 	length = strlen(obj.str);
 	str = new char[length + 1];
 	strcpy_s(str, length + 1, obj.str);
@@ -75,7 +81,7 @@ int MyString::MyChr(char c)
 int MyString::MyStrLen()
 {
 	int s = strlen(str);
-	return s - 1;
+	return s;
 }
 
 void MyString::MyStrCat(MyString& b)
@@ -135,24 +141,136 @@ int MyString::MyStrCmp(const MyString& b)
 	}
 }
 
-MyString MyString::operator+(const char *b)
+MyString MyString::operator+(MyString& b)
 {
-	MyString result(length+1 + strlen(b)+1);
-	strcpy_s(result.str, result.length + 1, this->str);
-	strcat_s(result.str, length + strlen(b)+2, b);
+	MyString result(this->length + b.length);
+	strcpy_s(result.str, this->length + 1, this->str);
+	strcat_s(result.str, this->length + b.length + 1, b.str);
 	return result;
 }
-MyString MyString::operator-(const char* b)
+MyString MyString::operator-(MyString& b)
 {
-	MyString result(this->length + 1);
-	char* pos = strstr(result.str, b);
-	if (pos != nullptr)
+	MyString result(this->length);
+	strcpy_s(result.str, this->length + 1, this->str);
+	for (int i = 0; i < b.length; ++i) 
 	{
-		int newLenght = strlen(this->str) - strlen(b);
-		result.str = new char[newLenght + 1];
+		result.MyDelChr(b.str[i]);
 	}
-	
+	return result;
+}
+bool MyString::operator==(MyString& b)
+{
+	return strcmp(this->str, b.str) == 0;
+}
+void MyString::printCount()
+{
+	cout << "Count => " << count << endl;
+}
+MyString MyString::operator=(const MyString& obj)
+{
+	if (this == &obj) return *this; 
+
+	if (str != nullptr)
+	{
+		delete[]str;
+	}
+	length = obj.length;
+	str = new char[strlen(obj.str) + 1];
+	strcpy_s(str, strlen(obj.str) + 1, obj.str);
+	return *this;
+
+}
+MyString MyString::operator=(MyString&& obj)
+{
+	if (str != nullptr)
+	{
+		delete[]str;
+	}
+	str = obj.str;
+	obj.str = nullptr;
+	length = obj.length;
+	obj.length = 0;
+	return *this;
+}
+MyString& MyString::operator++()
+{
+	length++;
+	return *this;
 }
 
+MyString& MyString::operator--()
+{
+	length--;
+	return *this;
+}
 
-	
+MyString MyString::operator++(int)
+{
+	MyString temp(*this);
+	length++;
+	return temp;
+}
+
+MyString MyString::operator--(int)
+{
+	MyString temp(*this);
+	length--;
+	return temp;
+}
+
+MyString::MyString(const MyString& obj)
+{
+	length = obj.length;
+	str = new char[length + 1];
+	strcpy_s(str, length + 1, obj.str);
+	count++;
+}
+
+MyString& MyString::operator+=(int a)
+{
+	length += a;
+	return *this;
+}
+
+MyString& MyString::operator-=(int a)
+{
+	length -= a;
+	return *this;
+}
+
+MyString& MyString::operator+=(const char* st)
+{
+	int addLen = strlen(st);
+	if (addLen == 0)
+	{
+		return *this;
+	}
+	char* newStr = new char[length + addLen + 1];
+	strcpy(newStr, str);
+	strcat(newStr, st);
+	delete[] str;
+	str = newStr;
+	length += addLen;
+	return *this;
+}
+
+MyString& MyString::operator-=(const char* st)
+{
+	int subLen = strlen(st);
+
+	if (subLen == 0 || length == 0)
+	{
+		return *this;
+	}
+	char* pos = strstr(str, st);
+	int newLen = length - subLen;
+	char* newStr = new char[newLen + 1];
+	int prefixLen = pos - str;
+	strncpy(newStr, str, prefixLen);
+	strcpy(newStr + prefixLen, pos + subLen);
+	delete[] str;
+	str = newStr;
+	length = newLen;
+	return *this;
+}
+

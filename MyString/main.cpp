@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include "MyString.h"
 using namespace std;
@@ -19,5 +18,13 @@ int main()
 	obj3.Print();*/
 	MyString a("Hello");
 	MyString b("World");
-	MyString c = a + b;
+	/*MyString c = a + b;
+	c.Print();*/
+	cout << a.MyStrLen();
+	a.Print();
+	a += "world";
+	a -= "lo";
+	a.Print();
+	MyString::printCount();
+	return 0;
 }

@@ -1,10 +1,12 @@
 #pragma once
+#include <iostream>
 class MyString
 {
 	char* str;
 	int length;
 public:
 	MyString();
+	static int count;
 	MyString(MyString&& obj);
 	MyString(int size);
 	MyString(const char* st);
@@ -17,8 +19,22 @@ public:
 	void MyStrCat(MyString& b); // объединение строк
 	void MyDelChr(char c); // удаляет указанный символ 
 	int MyStrCmp(const MyString& b); // сравнение строк 
-	MyString operator+(const char* b);
-	MyString operator-(const char* b);
-	
+	MyString operator+(MyString& b);
+	MyString operator-(MyString& b);
+	bool operator==(MyString& b);
+	static void printCount();
+	MyString operator=(const MyString& obj);
+	MyString operator=(MyString&& obj);
+	MyString& operator++(); //prefix
+	MyString& operator--();
+	MyString operator++(int);// postfix
+	MyString operator--(int);
+	MyString(const MyString& obj);
+	MyString& operator+=(int a);
+	MyString& operator-=(int a);
+	MyString& operator+=(const char* st);
+	MyString& operator-=(const char* st);
 };
+
+
 
