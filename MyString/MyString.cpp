@@ -274,3 +274,24 @@ MyString& MyString::operator-=(const char* st)
 	return *this;
 }
 
+ostream& operator<<(ostream& out, const MyString& s)
+{
+	if (s.str) {
+		out << s.str;
+	}
+	else {
+		out << "";
+	}
+	return out;
+}
+
+istream& operator>>(istream& in, MyString& s)
+{
+	char buffer[100];
+	in >> buffer;
+	delete[] s.str;
+	s.length = strlen(buffer);
+	s.str = new char[s.length + 1];
+	strcpy(s.str, buffer);
+	return in;
+}

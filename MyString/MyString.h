@@ -34,6 +34,8 @@ public:
 	MyString& operator-=(int a);
 	MyString& operator+=(const char* st);
 	MyString& operator-=(const char* st);
+	friend ostream& operator<<(ostream& out, const MyString& s);
+	friend istream& operator>>(istream& in, MyString& s);
 };
 
 
