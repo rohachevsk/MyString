@@ -10,6 +10,10 @@ public:
 	MyString(MyString&& obj);
 	MyString(int size);
 	MyString(const char* st);
+	MyString(const char *s) : length(strlen(s)), str(new char[strlen(s) + 1]) // список инициализации
+	{
+		strcpy(str, s);
+	}
 	~MyString();
 	void Print();
 	void MyStrcpy(MyString& obj);// копирование строк
